@@ -10,7 +10,7 @@ INCLUDE		:= -I./
 # 指定当前文件夹
 # 指定中间产物文件夹
 # 指定二进制文件的文件夹
-SUB_DIR 	= ./test ./defer
+SUB_DIR 	= ./test ./defer ./network
 WORKSPACE 	= $(shell pwd)
 OBJ_DIR 	= $(WORKSPACE)/build
 BIN_DIR 	= $(WORKSPACE)/bin
@@ -38,6 +38,7 @@ all: tar2 #tar1
 # 目标1
 tar: $(OBJS)
 	g++ $(CFLAGS) -o tar $(OBJS) $(INCLUDE) 
+
 
 # 目标2 可执行文件
 # 目标2依赖所有obj, 在command中-o连接起来所有的.o文件, 生成最终的可执行文件
