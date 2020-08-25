@@ -23,9 +23,8 @@ void M_EpollerBase::del(M_EventInfo* ptr){
 }
 void M_EpollerBase::wait(){
     _ep_size = epoll_wait(_epfd, _ep_list, MAX_EVENT_NUM, -1);
-    if(_ep_size > 0){
-        this->run();
-    }
+    if(_ep_size <= 0) return;
+    this->process();
 }
 
 void test(){

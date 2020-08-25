@@ -13,7 +13,7 @@
 using namespace std;
 
 #define IP "127.0.0.1"
-#define PORT 8800
+#define PORT 8080
 
 
 

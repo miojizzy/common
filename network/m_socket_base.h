@@ -17,7 +17,10 @@ namespace common{
 class M_ConnectInfo;
 typedef std::unique_ptr<M_ConnectInfo> M_ConnectInfoPtr;
 
-class M_ConnectInfo : public M_Event{
+/*
+ *  socket 连接的信息，并绑定了相应的连接fd
+ * */
+class M_ConnectInfo : virtual public M_Event{
     private:
         M_ConnectInfo():recv(""),send(""),recv_offset(0),send_offset(0){
             memset(&addr, 0, sizeof(addr));
@@ -48,22 +51,32 @@ class M_ConnectInfo : public M_Event{
 };
 
 
+/*
+ *  socket base
+ *  可以通过参数配置是否为阻塞监听
+ * */
 class M_SocketBase{
     public:
         M_SocketBase():fd(-1) {memset(&addr, 0, sizeof(addr)); };
         virtual ~M_SocketBase() {close(fd); };
 
-        int fd;
-        struct sockaddr_in addr;
-        std::vector<M_ConnectInfoPtr> conn_list;
+        int fd;     //监听fd
+        struct sockaddr_in addr;    //本机地址
+        std::vector<M_ConnectInfoPtr> conn_list; //管理所有存活的连接信息
 
-
+        /* 指定ip port 和 是否阻塞 快速初始化
+            client ip 为要连接的地址
+            server ip 为要监听的地址范围 0.0.0.0全选 或 127.0.0.1自己 */
         bool init(const char* ip, int port, bool nonblock=false);
 
+        /* 根据具体 客户端 和 服务器 实现不同内容
+         * */
         virtual void run() = 0;
 
+        /* 用于处理 接收连接 读 写 等函数
+         * */
+        void handle_accept(M_ConnectInfo& conn);
         void handle_recv(M_ConnectInfo& conn);
-
         void handle_send(M_ConnectInfo& conn);
 
 };

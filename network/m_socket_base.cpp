@@ -82,11 +82,16 @@ void M_Listener::run(){
         perror("oh!");
         return ;
     }
+    handle_accept(conn);
     handle_recv(conn);
     printf("[RECV] %s\n", conn.recv.c_str());
     conn.send = "I know.";
     handle_send(conn);
 
+};
+
+void M_SocketBase::handle_accept(M_ConnectInfo& conn){
+    
 };
 
 void M_SocketBase::handle_recv(M_ConnectInfo& conn){
