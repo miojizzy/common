@@ -14,10 +14,11 @@ int main (int argc, char* argv[]){
 //    lis.init("127.0.0.1", 8800);
 //    lis.run();
 
+/*  //network cs 下只有这个可用 其他的都未完成 注释暂时不动
     common::M_SelectServer s;
     s.init();
     s.run();
-    
+*/  
     return 0;
 }
 
